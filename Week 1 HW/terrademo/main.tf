@@ -1,21 +1,21 @@
 terraform {
   required_providers {
     google = {
-      source = "hashicorp/google"
+      source  = "hashicorp/google"
       version = "7.16.0"
     }
   }
 }
 
 provider "google" {
-  project     = "project-7d17f79e-abaf-4458-8e4"
-  region      = "us-east1"
+  project = var.project
+  region  = var.region
 }
 
 resource "google_storage_bucket" "demo-bucket" {
-  name          = "project-7d17f79e-abaf-4458-8e4-demo-bucket" // has to be globally unique across GCP
-  location      = "US"
-  force_destroy = true
+  name                        = var.gcp_bucket_name // has to be globally unique across GCP
+  location                    = var.location
+  force_destroy               = true
   uniform_bucket_level_access = true
 
 
@@ -30,6 +30,7 @@ resource "google_storage_bucket" "demo-bucket" {
 }
 
 resource "google_bigquery_dataset" "demo_dataset" {
-  dataset_id                  = "demo_dataset"
-  }
+  dataset_id = var.bq_dataset_name
+  location   = var.location
+}
 
